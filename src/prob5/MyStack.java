@@ -2,7 +2,7 @@ package prob5;
 
 public class MyStack {
 	private String array[];
-	private int top = 0;
+	private int top = -1;
 	
 	public MyStack(int i) throws MyStackException {
 		array = new String[i];
@@ -13,10 +13,11 @@ public class MyStack {
 	}
 	
 	public void push(String string) throws MyStackException {
-		if(top < size()) {
-			array[top] = string;
+		if(top < size()-1) {
 			top++;
+			array[top] = string;
 		} else {
+			System.out.println("doubling");
 			stackDoubling();
 			push(string);
 		}
@@ -31,8 +32,8 @@ public class MyStack {
 
 	public String pop() throws MyStackException {
 		if(!isEmpty()) {
-			String result = array[top-1];
-			array[top-1] = "";
+			String result = array[top];
+			array[top] = "";
 			top--;
 			return result;
 		} else {
@@ -42,14 +43,14 @@ public class MyStack {
 	
 	public String peek() throws MyStackException {
 		if(!isEmpty()) {
-			return array[top-1];
+			return array[top];
 		} else {
 			throw new MyStackException("stack is empty");
 		}
 	}
 	
 	public boolean isEmpty() throws MyStackException {
-		if(top == 0) {
+		if(top == -1) {
 			return true;
 		} else {
 			return false;
